@@ -55,9 +55,8 @@ This section:
 - Generate supplementary results
 */
 
-
 ** Patient Characteristics 
-
+do 4_TabCharByCancer.do
 
 ** Overall survival
 
