@@ -19,14 +19,14 @@ shell  `curlpath' 	///
 	--form content=record 	///
 	--form format=csv 		///
 	--form type=flat 		///
-	/// --form filterLogic="[include]='1'" /// if relevant
+	--form filterLogic="[inclu_database]='1'" /// if relevant
 	`apiurl'
 
 
 *** Convert to Stata format
 import delimited `outfile', ///
 	bindquote(strict) /// Fix quotes in text fields
-	stringcols(2) // Force CPR var to string
+	stringcols(3) // Force CPR var to string
 qui: erase `outfile'
 
 qui: ds
