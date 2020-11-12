@@ -58,8 +58,10 @@ This section:
 ** Patient Characteristics 
 do 4_TabCharByCancer.do
 
-** Overall survival
+** Survival
+do 4_TextSurv.do
 
+do 4_FigSurv.do
 
 ** Prognostic factors
 

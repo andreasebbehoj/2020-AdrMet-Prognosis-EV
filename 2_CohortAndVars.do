@@ -189,6 +189,16 @@ drop radi_pato radi_primary
 /* Is this correct? Check with EV*/
 
 
+
+*** Define survival outcome
+* Overall survival
+gen surv = d_dod-dateop // Patients who died
+replace surv = date("23jul2019", "DMY")-dateop if alive==1 // End of FU
+replace surv = surv/365.25 // in years
+drop days_alive* follow_up 
+order dateop alive d_dod surv, after(adrenalectomy)
+
+
 *** Save data
 save data/Cohort_FullData.dta, replace
 
