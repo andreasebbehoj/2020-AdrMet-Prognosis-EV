@@ -17,9 +17,16 @@ grstyle color major_grid gs11 // colour of horizontal lines
 
 ** Legend
 grstyle set legend ///
-	10, /// clock position of legend (1-12).
+	2, /// clock position of legend (1-12).
 	nobox /// no legend background
 	inside // inside plotregion
+
+** KM plots
+global km0 = `"plotopt(color(gs6)) ciopt(recast(rarea) fcolor(gs6%50) lcolor(%0))"'
+global km1 = `"plotopt(color(gs6)) ciopt(recast(rarea) fcolor(gs6%50) lcolor(%0))"'
+global km2 = `"plotopt(color(gs6)) ciopt(recast(rarea) fcolor(gs6%50) lcolor(%0))"'
+global km3 = `"plotopt(color(gs6)) ciopt(recast(rarea) fcolor(gs6%50) lcolor(%0))"'
+global km4 = `"plotopt(color(gs6)) ciopt(recast(rarea) fcolor(gs6%50) lcolor(%0))"'
 
 ** Line graphs (size, colors and patterns)
 grstyle set linewidth 3pt: p // line width (line and rcap)
