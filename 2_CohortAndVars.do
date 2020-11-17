@@ -95,7 +95,7 @@ label var age "Age at surgery"
 recode age ///
 	(0/59.999=1 "<60 years") ///
 	(60/70=2 "60-70 years") ///
-	(70.001/100=3 "{&ge}70 years") ///
+	(70.001/100=3 ">70 years") ///
 	, gen(agecat) label(agecat_)
 label var agecat "Age at surgery"
 
@@ -123,6 +123,7 @@ recode inclu_cancer ///
 	(5 = 3 "Colorectal cancer") ///
 	(3 4 6/99 = 4 "Other cancer") ///
 	, gen(cancertype) label(cancertype_)
+label var cancertype "Cancer origin"
 
 * Tumor size
 replace patosize = patosize * 10 // change from cm to mm
@@ -131,7 +132,7 @@ recode patosize ///
 	(20/39.999=2 "20-39 mm") ///
 	(40/59.999=3 "40-59 mm") ///
 	(60/79.999=4 "60-79 mm") ///
-	(80/1000=5 "{&ge}80 mm") ///
+	(80/1000=5 "≥80 mm") ///
 	(.=.a "Missing records") ///
 	, gen(sizecat) label(sizecat_)
 label var patosize "Size in mm"
