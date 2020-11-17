@@ -58,6 +58,9 @@ This section:
 ** Patient Characteristics 
 do 4_TabCharByCancer.do
 
+do 4_FigInciByApproach.do
+
+
 ** Survival
 do 4_TextSurv.do
 

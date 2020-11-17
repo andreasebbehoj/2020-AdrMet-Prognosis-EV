@@ -79,6 +79,15 @@ label var dateop "Date of surgery"
 gen year_op = year(dateop)
 label var year_op "Year of surgery"
 
+* Time periods
+recode year_op ///
+	(2000/2004=1 "2000-2004") ///
+	(2005/2009=2 "2005-2009") ///
+	(2010/2014=3 "2010-2014") ///
+	(2015/2018=4 "2015-2018") ///
+	, gen(period) label(period_)
+label var period "Time period"
+
 * Sex
 gen sex=gender
 label var sex "Sex"
@@ -155,12 +164,14 @@ recode optype ///
 	(1 2 =1 "Laparoscopic") ///
 	(3=2 "Conversion to open") ///
 	(4/7=3 "Open") ///
+	(.=.a "Missing") ///
 	, gen(surgcat) label(surgcat_)
 label var surgcat "Surgical approach"
 
 recode optype ///
 	(1/3=1 "Laparoscopic") ///
 	(4/7=2 "Open") ///
+	(.=.a "Missing") ///
 	, gen(surgcat_simple) label(surgcat_simple_)
 label var surgcat "Surgical approach"
 drop optype
