@@ -28,7 +28,7 @@ count if exclu_diag==66
 putdocx text ("Wrong pathology code (n=`r(N)')"), linebreak
 
 count if inlist(exclu_diag, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 44, 88)
-putdocx text ("No metastasis in adrenal gland (n=`r(N)')"), linebreak
+putdocx text ("Adrenal metastasis refuted (n=`r(N)')"), linebreak
 
 count if inlist(exclu_diag, 55, 77)
 putdocx text ("Inconclusive pathological examination (n=`r(N)')"), linebreak
@@ -102,12 +102,15 @@ label var agecat "Age at surgery"
 * BMI
 label var bmi "BMI in kg/m2"
 
-* CCI
+* CCI (remove age, remove current cancer and add previous cancer)
 label var cci "CCI"
 replace cci=cci-1 if inrange(age, 50, 59.999) // remove age from cci
 replace cci=cci-2 if inrange(age, 60, 69.999)
 replace cci=cci-3 if inrange(age, 70, 79.999)
 replace cci=cci-4 if inrange(age, 80, 100)
+
+replace cci=cci-6
+replace cci=cci+2 if inlist(record_id, 651, 2895, 2805, 3099, 3485, 1588, 3403, 3635, 4812) // Previous cancer
 
 * Surgical delay
 gen delay = dateop-adrenal_enlarge // Time from discovery of adrenal enlargement to OP
@@ -128,11 +131,9 @@ label var cancertype "Cancer origin"
 * Tumor size
 replace patosize = patosize * 10 // change from cm to mm
 recode patosize ///
-	(0/19.999=1 "<20 mm") ///
-	(20/39.999=2 "20-39 mm") ///
-	(40/59.999=3 "40-59 mm") ///
-	(60/79.999=4 "60-79 mm") ///
-	(80/1000=5 "≥80 mm") ///
+	(0/24.999=1 "<25 mm") ///
+	(25/50=2 "25-50 mm") ///
+	(50.001/1000=3 ">50 mm") ///
 	(.=.a "Missing records") ///
 	, gen(sizecat) label(sizecat_)
 label var patosize "Size in mm"
@@ -175,20 +176,13 @@ label var surgextent "Surgical extent"
 label var optime "Duration of surgery in min"
 
 * Radicality of procedure
-gen radical = .
-recode radical (.=1) if radi_primary==1 & radi_pato==1 // R0
-recode radical (.=2) if radi_primary==1 & radi_pato==99 // R1 uncertain micro but free macro
-recode radical (.=3) if radi_primary==0 | radi_pato==0 // R2 not free resection (micro or macro)
-label define radical_ ///
-	1 "R0-resection" ///
-	2 "R1-resection" ///
-	3 "R2-resection" ///
-	, replace
-label values radical radical_
+recode radi_pato ///
+	(1=1 "R0-resection") ///
+	(2 99=2 "R1-resection") ///
+	(3=3 "R2-resection") ///
+	, gen(radical) label(radical_)
 label var radical "Radicality of procedure"
-drop radi_pato radi_primary
-/* Is this correct? Check with EV*/
-
+drop radi_pato 
 
 
 *** Define survival outcome
