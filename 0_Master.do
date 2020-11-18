@@ -67,7 +67,7 @@ do 4_TextSurv.do
 do 4_FigSurv.do
 
 ** Prognostic factors
-
+do 4_TabProgOverall.do
 
 
 ***** 5) Report

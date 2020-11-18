@@ -50,3 +50,21 @@ foreach x of local levels {
 	local xnew = `xnew'+1
 }
 end
+
+** Add new row/obs to dataset (current or frame)
+capture: program drop newrow 
+program define newrow
+	syntax , [frame(string)]
+	* Current dataset (default)
+	if mi("`frame'") {
+		qui: count
+		local newobs=`r(N)'+1
+		qui: set obs `newobs'
+	}
+	* Frame if specified
+	if !mi("`frame'") {
+		qui frame `frame': count
+		local newobs=`r(N)'+1
+		qui frame `frame': set obs `newobs'
+	}
+end
