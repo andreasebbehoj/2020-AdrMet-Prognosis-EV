@@ -69,6 +69,8 @@ do 4_FigSurv.do
 ** Prognostic factors
 do 4_TabProgOverall.do
 
+do 4_TabProgByCancer.do
+
 
 ***** 5) Report
 /*
