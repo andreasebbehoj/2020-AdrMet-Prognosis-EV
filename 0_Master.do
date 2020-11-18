@@ -29,11 +29,13 @@ do 1_FigTabLayout.do
 This section:
 - Import clinical data from REDCap database
 - Define study cohort and generate main variables for later analyses
+- Import data on complications collected in spreadsheet
 */
 do 2_ImportRedcap.do
 
 do 2_CohortAndVars.do
 
+do 2_Complications.do
 
 
 ***** 3) PREPARE OTHER DATA
@@ -60,6 +62,8 @@ do 4_TabCharByCancer.do
 
 do 4_FigInciByApproach.do
 
+** Complications
+do 4_TabComplications.do
 
 ** Survival
 do 4_TextSurv.do
