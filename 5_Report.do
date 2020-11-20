@@ -180,53 +180,62 @@ putdocx text ("Notes:"), bold
 putdocx text  (`" Cox proportional regression analysis for overall survival after adrenal metastasectomy for each primary cancer."')
 
 
-** Tab - Crude for each cancer origin
+** Tab - 1-year survival for each cancer
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Example, all data for renal cancer")
+putdocx text ("Table `tabno' - 1-year survival by Primary Cancer")
 
 * Add and format data
-use results/TabProgByCancer_1.dta, clear
-putdocx table tbl1 = data("rowname n hr_crude hr_adjust median surv1"), width(100%) layout(autofitcontents)
+use results/TabProgByCancer_Combined.dta, clear
+
+ds surv1*
+local varlist = "`r(varlist)'"
+foreach var of local varlist {
+	qui: replace `var' = `var' + "_p" + subinstr(`var'[2], "_p", " ", .) if _n==1
+}
+drop if _n==2
+drop if vartype=="c" // No data for continuous vars
+
+putdocx table tbl1 = data("rowname `varlist'"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
-putdocx text ("Abbreviations and symbols:"), bold
-putdocx text  (" ")
 putdocx text ("Notes:"), bold
-putdocx text  (`" "')
+putdocx text  (`" 1-year survival after adrenal metastasectomy for each primary cancer."')
 
 
-
-/*
-** Tab 
+** Tab - Median survival for each cancer
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - ")
+putdocx text ("Table `tabno' - Median survival by Primary Cancer")
 
 * Add and format data
-use results/Tab.dta, clear
-ds cell_*
-putdocx table tbl1 = data("rowname `r(varlist)'"), width(100%) layout(autofitcontents)
+use results/TabProgByCancer_Combined.dta, clear
+
+ds median*
+local varlist = "`r(varlist)'"
+foreach var of local varlist {
+	qui: replace `var' = `var' + "_p" + subinstr(`var'[2], "_p", " ", .) if _n==1
+}
+drop if _n==2
+drop if vartype=="c" // No data surv for continuous vars
+
+putdocx table tbl1 = data("rowname `varlist'"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
-levelsof row if !mi(firstcol) & mi(seccol)
-putdocx table tbl1(`r(levels)', .), ${tablerows}
 putdocx paragraph
-putdocx text ("Abbreviations and symbols:"), bold
-putdocx text  (" ")
 putdocx text ("Notes:"), bold
-putdocx text  (`" "')
-*/
+putdocx text  (`" Median survival after adrenal metastasectomy for each primary cancer."')
 
 
 
 *** Save Figures and Tables report
 putdocx save results/FigTablesCombined, replace
+
 
 
 *** Combine and save text report
