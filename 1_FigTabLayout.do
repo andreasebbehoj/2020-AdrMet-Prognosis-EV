@@ -41,6 +41,11 @@ global line4 = `"lpattern("-") lcolor(black)"'
 global bar1 = `"fcolor(gs6) lcolor(gs6)"'
 global bar2 = `"fcolor(gs12) lcolor(gs12)"'
 
+* Graphs with 3 colors
+global bar3_1 = `"fcolor(gs6) lcolor(gs6)"'
+global bar3_2 = `"fcolor(gs12) lcolor(gs12)"'
+global bar3_3 = `" fcolor(white) lcolor(black) lalign(inside)"'
+
 * Graphs with 4 colors
 colorpalette HCL grays, n(4) nograph local(, prefix(c))
 global bar4_1 = `" fcolor(`c1') lcolor(`c1') lalign(inside)"'

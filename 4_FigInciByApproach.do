@@ -4,10 +4,10 @@
 use data/Cohort_Dataset.dta, clear
 
 * Change missing to nonmiss category
-conv_missing, var(surgcat) combmiss("Missing") 
+conv_missing, var(surgcat_simple) combmiss("Missing") 
 
 * Count N
-keep period surgcat
+keep period surgcat_simple
 contract _all, freq(N) zero
 
 
