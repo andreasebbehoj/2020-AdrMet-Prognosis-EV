@@ -16,14 +16,14 @@ frame table {
 	set obs 1
 	gen var = ""
 	gen rowname = ""
-	gen cell_total = "Total _p n (%)"
+	gen cell_total = "Total_pn (%)"
 	gen n_total = .
 }
 
 foreach subgrp of global subgrps {
 	di "`subgrp'"
 	local label : label ${colvar}_ `subgrp'
-	frame table: gen cell_`subgrp' = "`label' _p n (%)"
+	frame table: gen cell_`subgrp' = "`label'_pn (%)"
 	frame table: gen n_`subgrp' = .
 }
 
@@ -89,7 +89,7 @@ foreach time in peri post death {
 			qui: su row if var=="`var'"
 			local rowno = `r(max)'
 			local n = n_total[`rowno']
-			local p = string(round(100*`n'/`Ntotal_compli_`time'', 0.1), "%4.1f")
+			local p = string(round(100*`n'/`Ntotal_compli_`time'' ${signo_percent})
 			qui: replace cell_total = "`n' (`p')" if var=="`var'"
 		}
 		* By colvar
@@ -97,7 +97,7 @@ foreach time in peri post death {
 			*di "`var'- `col'"
 			frame table {	
 				local n = n_`col'[`rowno']
-				local p = string(round(100*`n'/`N`col'_compli_`time'', 0.1), "%4.1f")
+				local p = string(round(100*`n'/`N`col'_compli_`time'' ${signo_percent})
 				qui: replace cell_`col' = "`n' (`p')" if var=="`var'"
 			}
 		}

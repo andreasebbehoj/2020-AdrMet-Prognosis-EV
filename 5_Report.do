@@ -54,7 +54,7 @@ putdocx text  (" Frequency of adrenal metastasectomy in Denmark from $firstyear 
 putdocx pagebreak
 local figno = `figno'+1
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Figure `figno' - Survival After Adrenal Metastasectomy A) Overall and B) By Cancer Origin")
+putdocx text ("Figure `figno' - Survival after Adrenal Metastasectomy A) Overall and B) by Primary Cancer")
 putdocx paragraph, halign(center)
 putdocx text ("A")
 putdocx image results/FigSurvOverall${exportformat}, height(5 in)
@@ -62,32 +62,19 @@ putdocx text ("B")
 putdocx image results/FigSurvCancerSubRt${exportformat}, height(5 in)
 putdocx paragraph
 putdocx text ("Notes:"), bold
-putdocx text  (" Kaplan-Meier curve showing survival after adrenal metastasectomy A) for all patients combined and B) by cancer origin. The faded area represents the 95% confidence interval. Patients at risk are shown below graphs. ")
+putdocx text  (" Kaplan-Meier curve showing survival after adrenal metastasectomy A) for all patients combined and B) by primary cancer. The faded area represents the 95% confidence interval. Patients at risk are shown below graphs. ")
 
-
-/** 
-local figno = `figno'+1
-putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Figure `figno' - ")
-putdocx paragraph, halign(center)
-putdocx image results/Fig${exportformat}, height(5 in)
-putdocx paragraph
-putdocx text ("Abbreviations:"), bold
-putdocx text  (" ")
-putdocx text ("Notes:"), bold
-putdocx text  (" ")
-*/
 
 
 *** Tables
 local tabno = 0
 
 
-** Tab PatChar
+** Tab - PatChar
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Patient and Tumour Characteristics and Surgical Management by Type of Primary Cancer")
+putdocx text ("Table `tabno' - Patient and Tumour Characteristics and Surgical Management by Primary Cancer")
 
 * Add and format data
 use results/TabCharByCancer.dta, clear
@@ -106,7 +93,7 @@ putdocx text  (`" For variables, where data could not be found for all 439 patie
 // Confirm (n=x) numbers with EV
 
 
-** Tab Complications
+** Tab - Complications
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
@@ -132,7 +119,7 @@ putdocx text ("Notes:"), bold
 putdocx text  (`" Complications were classified in major and minor complications, based on severity, and as perioperative complications (during surgery) and post-operative complications (up to 30 days after surgery). Minor postoperative complications were only recorded if there was a need for intervention (e.g. obstipation requiring laxatives). Death within 30 days of surgery was considered a surgical complication, while death more than 30 days after surgery was not. Patients can be counted in more than category. "')
 
 
-** Tab Prognostic overall
+** Tab - Prognostic overall
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
@@ -146,29 +133,52 @@ putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
 putdocx text ("Abbreviations and symbols:"), bold
-putdocx text  (" BMI, body mass index; CCI, Charlson Comorbidity Index. *Adjusted for age, sex, and CCI. ")
+putdocx text  (" BMI, body mass index; CCI, Charlson Comorbidity Index; HRR, hazard rate ratio. *Adjusted for age, sex, and CCI. ")
 putdocx text ("Notes:"), bold
 putdocx text  (`" Cox proportional regression analysis for overall survival after adrenal metastasectomy."')
 
 
-** Tab - Crude for each cancer origin
+** Tab - Prognostic overall, layout v2
+*local tabno = `tabno'+1
+putdocx pagebreak
+putdocx paragraph, style(Heading2) `fontHeading2'
+putdocx text ("Table `tabno' - Same table as before, but another layout suggestion")
+
+* Add and format data
+use results/TabProgOverall.dta, clear
+putdocx table tbl1 = data("rowname n hr_crude hr_adjust median surv1"), width(100%) layout(autofitcontents)
+putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1(., 1), ${tablefirstcol}
+putdocx table tbl1(1, .), ${tablefirstrow}
+putdocx paragraph
+
+
+
+** Tab - Crude HRR for each cancer
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Prognostic Factors by Cancer Origin")
+putdocx text ("Table `tabno' - Prognostic Factors by Primary Cancer")
 
 * Add and format data
 use results/TabProgByCancer_Combined.dta, clear
 
-putdocx table tbl1 = data("rowname hr_crude1 hr_crude2 hr_crude3 hr_crude4"), width(100%) layout(autofitcontents)
+local varlist = "hr_crude1 hr_crude2 hr_crude3 hr_crude4"
+foreach var of local varlist {
+	qui: replace `var' = `var' + "_p" + subinstr(`var'[2], "_p", " ", .) if _n==1
+}
+drop if _n==2
+
+putdocx table tbl1 = data("rowname `varlist'"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
 putdocx text ("Abbreviations and symbols:"), bold
-putdocx text  (" ")
+putdocx text  (" BMI, body mass index; CCI, Charlson Comorbidity Index; HRR, hazard rate ratio. ")
 putdocx text ("Notes:"), bold
-putdocx text  (`" "')
+putdocx text  (`" Cox proportional regression analysis for overall survival after adrenal metastasectomy for each primary cancer."')
+
 
 ** Tab - Crude for each cancer origin
 local tabno = `tabno'+1

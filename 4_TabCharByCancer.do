@@ -44,7 +44,7 @@ foreach var in sex agecat sizecat loca_adrmet synvsmeta other_metastasis surgcat
 		capture: egen perc_`col' = pc(N`col')
 		capture: gen cell_`col' = 	string(N`col') /// N
 							+ " (" ///
-							+ string(round(perc_`col', 0.1), "%3.1f") ///
+							+ string(round(perc_`col' ${signo_percent}) ///
 							+ ")"
 	capture: drop N`col' perc_`col'
 	}
@@ -94,11 +94,11 @@ foreach var in mean.age mean.bmi mean.cci median.delay median.patosize  { //
 	if "`type'"=="median" {
 		* Calculate median and range
 		qui: statsby, by(${colvar}) clear total: su `var', detail
-		gen cell_ = string(round(p50, 1), "%3.0f") /// Median
+		gen cell_ = string(round(p50 ${signo_median}) /// Median
 								+ " (" /// 
-								+ string(round(p25, 1), "%3.0f") /// min
+								+ string(round(p25 ${signo_median}) /// min
 								+ "-" ///
-								+ string(round(p75, 1), "%3.0f") /// max
+								+ string(round(p75 ${signo_median}) /// max
 								+ ")"
 		
 		* Row names (var group)
@@ -111,18 +111,10 @@ foreach var in mean.age mean.bmi mean.cci median.delay median.patosize  { //
 	if "`type'"=="mean" {
 		* Calculate mean and SD
 		qui: statsby, by(${colvar}) clear total: su `var', detail
-		if inlist("`var'", "age", "bmi", "cci") {
-			gen cell_ = string(round(mean, 0.1), "%3.1f") /// Median
+		gen cell_ = string(round(mean ${signo_mean}) /// Median
 								+ " (" /// 
-								+ string(round(sd, 0.1), "%3.1f") /// min
+								+ string(round(sd ${signo_mean}) /// min
 								+ ")"
-		}
-		else {
-			gen cell_ = string(round(mean, 1), "%3.0f") /// Median
-								+ " (" /// 
-								+ string(round(sd, 1), "%3.0f") /// min
-								+ ")"
-		}
 		
 		* Row names (var group)
 		qui: gen firstcol = "`name', mean (SD)" 
@@ -161,11 +153,11 @@ foreach var in optime {
 	foreach grp of local subgroups {
 		qui: su `var' if surgcat_simple==`grp', detail
 		
-		local var_grp_`grp' = string(round(`r(p50)', 1), "%3.0f") /// Median
+		local var_grp_`grp' = string(round(`r(p50)' ${signo_median}) /// Median
 							+ " (" /// 
-							+ string(round(`r(p25)', 1), "%3.0f") /// min
+							+ string(round(`r(p25)' ${signo_median}) /// min
 							+ "-" ///
-							+ string(round(`r(p75)', 1), "%3.0f") /// max
+							+ string(round(`r(p75)' ${signo_median}) /// max
 							+ ")"
 		
 		di "surgcat, subgrp `grp' median (IQR): `var_grp_`grp'')"
@@ -175,11 +167,11 @@ foreach var in optime {
 	* Calculate median and range (by colvar)
 	qui: statsby, by(surgcat_simple $colvar) clear: su `var', detail
 	
-	gen cell_ = string(round(p50, 1), "%3.0f") /// Median
+	gen cell_ = string(round(p50 ${signo_median}) /// Median
 							+ " (" /// 
-							+ string(round(p25, 1), "%3.0f") /// min
+							+ string(round(p25 ${signo_median}) /// min
 							+ "-" ///
-							+ string(round(p75, 1), "%3.0f") /// max
+							+ string(round(p75 ${signo_median}) /// max
 							+ ")"
 	keep surgcat cell_ $colvar
 	

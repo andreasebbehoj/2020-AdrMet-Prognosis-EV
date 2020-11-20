@@ -155,7 +155,7 @@ label var loca_adrmet "Location of metastasis"
 label var synvsmeta "Mode of discovery"
 
 * Extra adrenal mets
-label var other_metastasis "Extra-adrenal metastases at time of surgery"
+label var other_metastasis "Extra-adrenal metastases_pat time of surgery"
 
 
 ** Surgical variables

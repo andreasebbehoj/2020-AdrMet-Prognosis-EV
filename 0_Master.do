@@ -75,6 +75,9 @@ do 4_TabProgOverall.do
 
 do 4_TabProgByCancer.do
 
+window manage close graph _all
+file close _all
+
 
 ***** 5) Report
 /*
@@ -83,7 +86,3 @@ This section:
 - Combine all documents into FigTablesCombined and ReportCombined
 */
 do 5_Report.do
-
-
-file close _all
-window manage close graph _all

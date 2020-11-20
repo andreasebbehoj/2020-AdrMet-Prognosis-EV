@@ -40,13 +40,13 @@ frame table {
 	gen varheader = "Varheader"
 	gen subgrp = .
 	gen subname = "Subgrp name"
-	gen n = "n event / n total"
-	gen hr_crude = "Crude HR (95%CI)"
+	gen n = "n died /_pn total"
+	gen hr_crude = "Crude HRR_p(95%CI)"
 	gen hr_crude_p = "P"
-	gen hr_adjust = "Adjusted HR (95%CI) #"
+	gen hr_adjust = "Adjusted HRR_p(95%CI) *"
 	gen hr_adjust_p = "P"
-	gen median = "Median survival, years (IQR)"
-	gen surv1 = "1-year survival, % (95%CI)"
+	gen median = "Median survival_pyears (IQR)"
+	gen surv1 = "1-year survival_p% (95%CI)"
 }
 
 
@@ -122,10 +122,10 @@ foreach varanalysis of global expvar {
 		qui: stcox `varanalysis'
 		matrix A = r(table)
 		
-		local est = string(round(A[1, 1], 0.001), "%4.3f")
-		local lb = string(round(A[5, 1], 0.001), "%4.3f")
-		local ub = string(round(A[6, 1], 0.001), "%4.3f")
-		local pval = string(round(A[4, 1], 0.001), "%4.3f")
+		local est = string(round(A[1, 1]${signo_cox})
+		local lb = string(round(A[5, 1]${signo_cox})
+		local ub = string(round(A[6, 1]${signo_cox})
+		local pval = string(round(A[4, 1]${signo_pval})
 		
 		di _col(15) "`est' (`lb' to `ub')"
 		
@@ -146,10 +146,10 @@ foreach varanalysis of global expvar {
 		local x = 1
 		qui: levelsof `varname'
 		foreach subgrp in `r(levels)' {
-			local est = string(round(A[1, `x'], 0.001), "%4.3f")
-			local lb = string(round(A[5, `x'], 0.001), "%4.3f")
-			local ub = string(round(A[6, `x'], 0.001), "%4.3f")
-			local pval = string(round(A[4, `x'], 0.001), "%4.3f")
+			local est = string(round(A[1, `x']${signo_cox})
+			local lb = string(round(A[5, `x']${signo_cox})
+			local ub = string(round(A[6, `x']${signo_cox})
+			local pval = string(round(A[4, `x']${signo_pval})
 			
 			di _col(10) "`subgrp': "  _col(15) "`est' (`lb' to `ub')"
 			
@@ -182,10 +182,10 @@ foreach varanalysis of global expvar {
 		qui: stcox `varanalysis' `varadjust'
 		matrix A = r(table)
 		
-		local est = string(round(A[1, 1], 0.001), "%4.3f")
-		local lb = string(round(A[5, 1], 0.001), "%4.3f")
-		local ub = string(round(A[6, 1], 0.001), "%4.3f")
-		local pval = string(round(A[4, 1], 0.001), "%4.3f")
+		local est = string(round(A[1, 1] ${signo_cox})
+		local lb = string(round(A[5, 1] ${signo_cox})
+		local ub = string(round(A[6, 1] ${signo_cox})
+		local pval = string(round(A[4, 1] ${signo_pval})
 		
 		di _col(15) "`est' (`lb' to `ub')"
 		
@@ -206,10 +206,10 @@ foreach varanalysis of global expvar {
 		local x = 1
 		qui: levelsof `varname'
 		foreach subgrp in `r(levels)' {
-			local est = string(round(A[1, `x'], 0.001), "%4.3f")
-			local lb = string(round(A[5, `x'], 0.001), "%4.3f")
-			local ub = string(round(A[6, `x'], 0.001), "%4.3f")
-			local pval = string(round(A[4, `x'], 0.001), "%4.3f")
+			local est = string(round(A[1, `x'] ${signo_cox})
+			local lb = string(round(A[5, `x'] ${signo_cox})
+			local ub = string(round(A[6, `x'] ${signo_cox})
+			local pval = string(round(A[4, `x'] ${signo_pval})
 			
 			di _col(10) "`subgrp': "  _col(15) "`est' (`lb' to `ub')"
 			
@@ -240,11 +240,11 @@ foreach varanalysis of global expvar {
 		qui: levelsof `varname'
 		foreach subgrp in `r(levels)' {
 			qui: stci if `varname'==`subgrp', median
-			local p50 = string(round(`r(p50)', 0.1), "%4.1f")
+			local p50 = string(round(`r(p50)' ${signo_medsurv})
 			qui: stci if `varname'==`subgrp', p(25)
-			local p25 = string(round(`r(p25)', 0.1), "%4.1f")
+			local p25 = string(round(`r(p25)' ${signo_medsurv})
 			qui: stci if `varname'==`subgrp', p(75)
-			local p75 = string(round(`r(p75)', 0.1), "%4.1f")
+			local p75 = string(round(`r(p75)' ${signo_medsurv})
 			
 			di _col(10) "`subgrp': "  _col(15) "`p50' (IQR `p25'-`p75')"
 			
@@ -254,6 +254,7 @@ foreach varanalysis of global expvar {
 }
 
 
+*** Calculate 1-year survival
 foreach varanalysis of global expvar {
 	preserve
 	local varname = substr("`varanalysis'", strpos("`varanalysis'", ".")+1, .)
@@ -276,9 +277,9 @@ foreach varanalysis of global expvar {
 		
 		foreach subgrp of local subgrps {
 			qui: su no if `varname'==`subgrp' & time==1
-			local est = string(round(survivor[`r(max)']*100, 0.1), "%4.1f")
-			local lb = string(round(lb[`r(max)']*100, 0.1), "%4.1f")
-			local ub = string(round(ub[`r(max)']*100, 0.1), "%4.1f")
+			local est = string(round(survivor[`r(max)']*100 ${signo_surv1})
+			local lb = string(round(lb[`r(max)']*100 ${signo_surv1})
+			local ub = string(round(ub[`r(max)']*100 ${signo_surv1})
 			
 			di _col(10) "`subgrp': "  _col(15) "`est' (95%CI `lb'-`ub')"
 			
@@ -293,13 +294,18 @@ foreach varanalysis of global expvar {
 frame table {
 	* First column 
 	qui: gen rowname = varheader if _n!=1
-	qui: replace rowname = "    " + subname if mi(rowname) 
+	qui: replace rowname = "    " + subname if mi(rowname) & _n!=1
 	
 	* Text edits
 	ds, has(type string)
 	foreach var in `r(varlist)' {
 		qui: replace `var' = subinstr(`var', " (.-.)", "", 1) // remove empty 95CI for refs
 		qui: replace `var' = "" if `var'=="."
+	}
+	
+	* Pvalues
+	foreach var in hr_crude_p hr_adjust_p {
+		qui: replace `var' = "<0.001" if `var'=="0.000"
 	}
 	
 	gen row = _n
