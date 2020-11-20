@@ -188,9 +188,9 @@ label var optime "Duration of surgery in min"
 
 * Radicality of procedure
 recode radi_pato ///
-	(1=1 "R0-resection") ///
-	(2 99=2 "R1-resection") ///
-	(3=3 "R2-resection") ///
+	(1=1 "R0-resection") /// radical
+	(99=2 "R1-resection") /// unsure
+	(0=3 "R2-resection") /// non-radical
 	, gen(radical) label(radical_)
 label var radical "Radicality of procedure"
 drop radi_pato 
