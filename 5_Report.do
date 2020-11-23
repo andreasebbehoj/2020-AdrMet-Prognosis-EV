@@ -41,13 +41,13 @@ putdocx paragraph
 ** Fig Inci during study period
 local figno = `figno'+1
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Figure `figno' - Adrenalectomy in Denmark, $firstyear-$lastyear")
+putdocx text ("Figure `figno' - Adrenal Metastasectomy in Denmark, $firstyear-$lastyear")
 putdocx paragraph, halign(center)
 putdocx image results/FigInciByApproach${exportformat}, height(5 in)
 putdocx paragraph
 
 putdocx text ("Notes:"), bold
-putdocx text  (" Frequency of adrenal metastasectomy in Denmark from $firstyear to $lastyear. Each bar illustrates the number of adrenalectomies colored after the surgical approach.")
+putdocx text  (" Frequency of adrenal metastasectomy in Denmark from $firstyear to $lastyear. Bars are coloured to illustrate the surgical approach. Laparoscopic surgery includes patients who were converted to open surgery perioperatively. Note that the first column to the left only includes four years, while the remaining columns include five years.")
 
 
 ** Fig Surv Overall
