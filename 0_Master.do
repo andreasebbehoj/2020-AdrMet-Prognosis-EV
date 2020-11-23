@@ -60,6 +60,8 @@ This section:
 ** Patient Characteristics 
 do 4_TabCharByCancer.do
 
+do 4_TextPatDetails.do
+
 do 4_FigInciByApproach.do
 
 ** Complications

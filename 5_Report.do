@@ -47,7 +47,7 @@ putdocx image results/FigInciByApproach${exportformat}, height(5 in)
 putdocx paragraph
 
 putdocx text ("Notes:"), bold
-putdocx text  (" Frequency of adrenal metastasectomy in Denmark from $firstyear to $lastyear. Bars are coloured to illustrate the surgical approach. Laparoscopic surgery includes patients who were converted to open surgery perioperatively. Note that the first column to the left only includes four years, while the remaining columns include five years.")
+putdocx text  (" Frequency of adrenal metastasectomy in Denmark from $firstyear to $lastyear. Bars are coloured after the surgical approach. Note that the first column to the left only includes four years, while the remaining columns include five years. Laparoscopic surgery includes patients who were converted to open surgery perioperatively.")
 
 
 ** Fig Surv Overall
@@ -57,7 +57,8 @@ putdocx paragraph, style(Heading2) `fontHeading2'
 putdocx text ("Figure `figno' - Survival after Adrenal Metastasectomy A) Overall and B) by Primary Cancer")
 putdocx paragraph, halign(center)
 putdocx text ("A")
-putdocx image results/FigSurvOverall${exportformat}, height(5 in)
+putdocx image results/FigSurvOverall${exportformat}, height(2.8 in)
+putdocx paragraph, halign(center)
 putdocx text ("B")
 putdocx image results/FigSurvCancerSubRt${exportformat}, height(5 in)
 putdocx paragraph
@@ -89,7 +90,7 @@ putdocx paragraph
 putdocx text ("Abbreviations and symbols:"), bold
 putdocx text  (" BMI, body mass index; CCI, Charlson Comorbidity Index; IQR inter-quartile range; OP, operation; SD, standard deviation. ")
 putdocx text ("Notes:"), bold
-putdocx text  (`" For variables, where data could not be found for all 439 patients, the number of patients with available information is specified in brackets (e.g. [n=x]). Details on histopathological subtypes of renal, lung, and colorectal cancer are available in Supplementary 1. *Other types of cancers originated from malignant melanoma (n=22) oesophagus (n=7), ovarian (n=6), liver (n=5), bladder (n=4), pancreas (n=2), breast (n=2), thyroid (n=2), pleura (n=1), cervix (n=1), testis (n=1), smooth muscle (n=1), skin (n=1), duodenum (n=1), trachea (n=1), urethra (n=1), nasal (n=1) and unknown (n=11). # Doctor’s delay is defined as the time from discovery of adrenal metastasis until surgery."')
+putdocx text  (`" For variables, where data could not be found for all 439 patients, the number of patients with available information is specified in brackets (e.g. [n=x]). Details on histopathological subtypes of renal, lung, and colorectal cancer are available in Supplementary 1. * Other types of cancers originated from ${Footnote_othercancers}. # Doctor’s delay is defined as the time from discovery of adrenal metastasis until surgery."')
 // Confirm (n=x) numbers with EV
 
 
@@ -103,7 +104,7 @@ putdocx text ("Table `tabno' - Minor and Major Surgical Complications by Surgica
 use results/TabComplications.dta, clear
 levelsof row if mi(rowheader), sep(",")
 replace rowname = "   " + rowname if inlist(row, `r(levels)')
-
+replace cell_1 = subinstr(cell_1, "scopic", "scopic *", 1) if row==1 // Add * to laparoscopic
 ds cell_*
 putdocx table tbl1 = data("rowname `r(varlist)'"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 

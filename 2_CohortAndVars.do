@@ -169,8 +169,8 @@ recode optype ///
 label var surgcat "Surgical approach"
 
 recode optype ///
-	(1/3=1 "Laparoscopic surgery") ///
-	(4/7=2 "Open surgery") ///
+	(1/3=1 "Laparoscopic") ///
+	(4/7=2 "Open") ///
 	(.=.a "Missing") ///
 	, gen(surgcat_simple) label(surgcat_simple_)
 label var surgcat "Surgical approach"
