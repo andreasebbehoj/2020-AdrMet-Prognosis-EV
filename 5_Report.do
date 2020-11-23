@@ -105,8 +105,7 @@ use results/TabComplications.dta, clear
 levelsof row if mi(rowheader), sep(",")
 replace rowname = "   " + rowname if inlist(row, `r(levels)')
 replace cell_1 = subinstr(cell_1, "scopic", "scopic *", 1) if row==1 // Add * to laparoscopic
-ds cell_*
-putdocx table tbl1 = data("rowname `r(varlist)'"), width(100%) layout(autofitcontents)
+putdocx table tbl1 = data("rowname cell_1 cell_2"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
