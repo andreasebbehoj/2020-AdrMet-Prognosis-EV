@@ -173,7 +173,7 @@ recode optype ///
 	(4/7=2 "Open") ///
 	(.=.a "Missing") ///
 	, gen(surgcat_simple) label(surgcat_simple_)
-label var surgcat "Surgical approach"
+label var surgcat_simple "Surgical approach"
 drop optype
 
 * Surgical extent
