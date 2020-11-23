@@ -88,10 +88,10 @@ global tablefirstcol = `"halign(left)"'
 
 *** Significant numbers
 // "string(round(X, 0.001), "%4.3f")"
-global signo_percent = `", 0.1), "%4.1f" "' // Percent 
+global signo_percent = `", 1), "%4.0f" "' // Percent 
 global signo_median = `", 1), "%4.0f" "' // Median, IQR and range
 global signo_mean = `", 0.1), "%4.1f" "' // Mean and SD
 global signo_cox = `", 0.01), "%4.2f" "' // Cox regression
 global signo_medsurv = `", 0.1), "%4.1f" "' // Median survival
-global signo_surv1 = `", 0.1), "%4.1f" "' // 1-year survival
+global signo_surv1 = `", 1), "%4.0f" "' // 1-year survival
 global signo_pval = `", 0.001), "%4.3f" "' // P-values

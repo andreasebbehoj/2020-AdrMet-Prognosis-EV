@@ -127,7 +127,7 @@ putdocx text ("Table `tabno' - Overall Prognostic Factors")
 
 * Add and format data
 use results/TabProgOverall.dta, clear
-putdocx table tbl1 = data("rowname n hr_crude hr_crude_p hr_adjust hr_adjust_p"), width(100%) layout(autofitcontents)
+putdocx table tbl1 = data("rowname n hr_crude hr_adjust median surv1"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
@@ -136,22 +136,6 @@ putdocx text ("Abbreviations and symbols:"), bold
 putdocx text  (" BMI, body mass index; CCI, Charlson Comorbidity Index; HRR, hazard rate ratio. *Adjusted for age, sex, and CCI. ")
 putdocx text ("Notes:"), bold
 putdocx text  (`" Cox proportional regression analysis for overall survival after adrenal metastasectomy."')
-
-
-** Tab - Prognostic overall, layout v2
-*local tabno = `tabno'+1
-putdocx pagebreak
-putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Same table as before, but another layout suggestion")
-
-* Add and format data
-use results/TabProgOverall.dta, clear
-putdocx table tbl1 = data("rowname n hr_crude hr_adjust median surv1"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
-putdocx table tbl1(., 1), ${tablefirstcol}
-putdocx table tbl1(1, .), ${tablefirstrow}
-putdocx paragraph
-
 
 
 ** Tab - Crude HRR for each cancer
