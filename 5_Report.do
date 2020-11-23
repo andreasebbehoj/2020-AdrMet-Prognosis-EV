@@ -164,56 +164,25 @@ putdocx text ("Notes:"), bold
 putdocx text  (`" Cox proportional regression analysis for overall survival after adrenal metastasectomy for each primary cancer."')
 
 
-** Tab - 1-year survival for each cancer
+** Tab - Median and 1-year survival for each cancer
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - 1-year survival by Primary Cancer")
+putdocx text ("Table `tabno' - Median and 1-year survival by Primary Cancer")
 
 * Add and format data
 use results/TabProgByCancer_Combined.dta, clear
 
-ds surv1*
-local varlist = "`r(varlist)'"
-foreach var of local varlist {
-	qui: replace `var' = `var' + "_p" + subinstr(`var'[2], "_p", " ", .) if _n==1
-}
-drop if _n==2
 drop if vartype=="c" // No data for continuous vars
 
-putdocx table tbl1 = data("rowname `varlist'"), width(100%) layout(autofitcontents)
+putdocx table tbl1 = data("rowname median1 surv11 median2 surv12 median3 surv13"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., 1), ${tablefirstcol}
-putdocx table tbl1(1, .), ${tablefirstrow}
+putdocx table tbl1(1/2, .), ${tablefirstrow}
+putdocx table tbl1(1, .), border(all, nil)
 putdocx paragraph
 putdocx text ("Notes:"), bold
-putdocx text  (`" 1-year survival after adrenal metastasectomy for each primary cancer."')
-
-
-** Tab - Median survival for each cancer
-local tabno = `tabno'+1
-putdocx pagebreak
-putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Median survival by Primary Cancer")
-
-* Add and format data
-use results/TabProgByCancer_Combined.dta, clear
-
-ds median*
-local varlist = "`r(varlist)'"
-foreach var of local varlist {
-	qui: replace `var' = `var' + "_p" + subinstr(`var'[2], "_p", " ", .) if _n==1
-}
-drop if _n==2
-drop if vartype=="c" // No data surv for continuous vars
-
-putdocx table tbl1 = data("rowname `varlist'"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
-putdocx table tbl1(., 1), ${tablefirstcol}
-putdocx table tbl1(1, .), ${tablefirstrow}
-putdocx paragraph
-putdocx text ("Notes:"), bold
-putdocx text  (`" Median survival after adrenal metastasectomy for each primary cancer."')
+putdocx text  (`" Median and 1-year survival after adrenal metastasectomy for renal, lung, and colorectal cancer."')
 
 
 
