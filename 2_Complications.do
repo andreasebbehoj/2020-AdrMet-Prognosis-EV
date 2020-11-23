@@ -151,7 +151,7 @@ label var post_major_ai "Adrenal insufficiency"
 * Other major
 recode Otherhospi (2=1) (0 1=0) (.=.), gen(post_major_other)
 recode post_major_other (0=1) if Otherpostop==2
-label var post_major_other "Other ¤"
+label var post_major_other "Other ~"
 
 // Error in code? Confirm with EV
 
@@ -160,20 +160,17 @@ egen post_anyminor = rowmax(post_minor_*)
 label var post_anyminor "Any minor"
 
 egen post_anymajor = rowmax(post_major_*) // Excluding death which had full follow-up
-label var post_anymajor "Any major"
+label var post_anymajor "Any major (excl. death) ¤"
 
 
 ** Death
-gen compli_death = 0 // Death available for all patients
+gen compli_death = 1 // Vital status was available for all patients
 label var compli_death "30-day mortality available"
 
 gen death = 1 if surv<(30/365.25) & alive==0 
 recode death (.=0) // complete follow-up
-label var death "Death within 30 days ~"
+label var death "Death within 30 days"
 
-
-
-// Error in code? Confirm with EV
 
 
 *** Save

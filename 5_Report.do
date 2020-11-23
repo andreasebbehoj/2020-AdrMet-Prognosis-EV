@@ -115,9 +115,9 @@ putdocx table tbl1(`r(levels)', .), ${tablerows}
 
 putdocx paragraph
 putdocx text ("Abbreviations and symbols:"), bold
-putdocx text  (" UTI, urinary tract infection * Including patients converted from laparoscopic to open surgery. # Organ lesions included lesion of spleen (n=7), kidney (n=5), biliary ducts (n=4), pancreas (n=3), ventricle (n=1), and unspecified organ lesion (n=4). § Including X, Y, and Z other examples. ¤ Including X, Y, and Z other examples. ")
+putdocx text  (" UTI, urinary tract infection * Including patients converted from laparoscopic to open surgery. # Organ lesions included lesion of spleen (n=7), kidney (n=5), biliary ducts (n=4), pancreas (n=3), ventricle (n=1), and unspecified organ lesion (n=4). § Other minor complications includes X, Y, and Z other examples. ~ Other major complications includes X, Y, and Z other examples. ¤ $Footnote_complicationsdeath")
 putdocx text ("Notes:"), bold
-putdocx text  (`" Complications were classified in major and minor complications, based on severity, and as perioperative complications (during surgery) and post-operative complications (up to 30 days after surgery). Minor postoperative complications were only recorded if there was a need for intervention (e.g. obstipation requiring laxatives). Death within 30 days of surgery was considered a surgical complication, while death more than 30 days after surgery was not. Patients can be counted in more than category. "')
+putdocx text  (`" Complications were classified in major and minor complications, based on severity, and as perioperative complications (during surgery) and post-operative complications (up to 30 days after surgery). Minor postoperative complications were only recorded if there was a need for intervention (e.g. obstipation requiring laxatives). Patients can be counted in more than category. Death within 30 days of surgery was considered a surgical complication, while death more than 30 days after surgery was not."')
 
 
 ** Tab - Prognostic overall
