@@ -125,7 +125,7 @@ label var post_minor_pulm "Lung oedema, pleura exudate, or atelectasis"
 * Abscess 
 assert inlist(Absces, 0, 1, .)
 recode Absces (1=1) (0=0) (.=.), gen(post_minor_abscess)
-label var post_minor_abscess "Abscess"
+label var post_minor_abscess "Abdominal abscess"
 
 
 * Sepsis/pneumonia
