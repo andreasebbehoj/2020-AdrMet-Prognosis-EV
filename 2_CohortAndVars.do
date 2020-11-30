@@ -187,13 +187,16 @@ label var surgextent "Surgical extent"
 label var optime "Duration of surgery in min"
 
 * Radicality of procedure
-recode radi_pato ///
-	(1=1 "R0-resection") /// radical
-	(99=2 "R1-resection") /// unsure
-	(0=3 "R2-resection") /// non-radical
-	, gen(radical) label(radical_)
-label var radical "Radicality of procedure"
-drop radi_pato 
+tab radi_pato radi1or2, mi
+
+gen radical = 0 if radi_pato==1 // R0: Free margins (Both Micro and Macro negative)
+recode radical (.=1) if radi_pato==99 /// R1: Micro uncertain
+		| radi_pato==0 & radi1or2==1 // Or micro-positive
+recode radical (.=2) if radi_pato==0 & radi1or2==2 // R2: Positive margins (micro and macro)
+label var radical "Radicality"
+label define radical_ 0 "R0-resection" 1 "R1-resection" 2 "R2-resection", replace
+label value radical radical_
+drop radi_pato radi1or2
 
 
 *** Define survival outcome

@@ -56,6 +56,7 @@ label define how_treat_primary_ 1 "Surgical resection" 2 "Curative radiation/che
 label define radi_primary_ 0 "No" 1 "Yes" 99 "Unsure" 
 label define other_metastasis_ 1 "Yes" 0 "No" 
 label define radi_pato_ 1 "Yes" 0 "No" 99 "Unsure" 
+label define radi1or2_ 1 "R1" 2 "R2" 
 label define treat_chemo_ 1 "Yes" 2 "No" 
 label define treat_radio_ 1 "Yes" 2 "No" 
 label define treat_immuno_ 1 "Yes" 2 "No" 
@@ -132,6 +133,7 @@ label values how_treat_primary how_treat_primary_
 label values radi_primary radi_primary_
 label values other_metastasis other_metastasis_
 label values radi_pato radi_pato_
+label values radi1or2 radi1or2_
 label values treat_chemo treat_chemo_
 label values treat_radio treat_radio_
 label values treat_immuno treat_immuno_
@@ -307,6 +309,7 @@ label variable other_metastasis "Were there other metastasis at time of adrenale
 label variable other_met_loc "Where were they located and how many?"
 label variable tnm "What was the TNM stage prior to surgery?"
 label variable radi_pato "Was the tumor radically removed (confirmed by pathologist)?"
+label variable radi1or2 "Was the surgery macroradical (R1) or not macroradical (R2)?"
 label variable treat_chemo "Chemotherapy"
 label variable treat_radio "Radiotherapy"
 label variable treat_immuno "Immunotherapy"
@@ -359,6 +362,6 @@ label variable notespt "Additional notes about patient."
 label variable curative "Was the operation debulking?"
 label variable follow_up_complete "Complete?"
 
-order record_id inclu_database cpr adrenalectomy exclu_diag adrmet_disc exclu_diag_other inclu_cancer expla_other immunocancer biopsydate incidentaloma doubt comment_diag expla_doubt ophospital expla_hospital onco_dep expla_onco registry_screening_e_v_0 d_foddato gender height weight bmi cci patient_information_complete dateop opage biopsymet ps asa hospital surgeon optime optype loca_adrmet removal surg_remove compli_during compli_during_type___1 compli_during_type___2 compli_during_type___3 compli_during_type___4 compli_during_expla operation_complete discharge hospitalization_days compli_after complications___1 complications___2 complications___3 complications___4 complications___5 complications___6 complications___7 complications___99 compli_expla transfer transfer_depart trans_cause hospitalization_complete cancertype_2 subtype_cancer immunocancer_2 primary_date synvsmeta adrenal_enlarge discovery_adrmet discovery_adrmet_2 adrenalsize imaging___1 imaging___2 imaging___3 imaging___4 technique patosizeyesno patosize specisize ki67yesno ki67 pet pet_date treat_primary how_treat_primary radi_primary other_metastasis other_met_loc tnm radi_pato treat_chemo treat_radio treat_immuno chemo_prior radio_prior immuno_prior treat_chemo_after treat_radio_after treat_immuno_after chemo_after radio_after immuno_after cancer_information_complete crp neutro lympho nlr trombo ldh na albumin haemo bf alat comment_blood biochemical_informat_v_1 follow_up alive d_dod days_alive days_alive1 days_alive_biopsy cause_death compli_postop compli_postop_type___1 compli_postop_type___2 compli_postop_type___3 compli_postop_type___4 compli_postop_type___5 compli_postop_type___6 compli_postop_expla diseasefree relapse relapse_date location_relapse discuss question bloodwork notespt curative follow_up_complete 
+order record_id inclu_database cpr adrenalectomy exclu_diag adrmet_disc exclu_diag_other inclu_cancer expla_other immunocancer biopsydate incidentaloma doubt comment_diag expla_doubt ophospital expla_hospital onco_dep expla_onco registry_screening_e_v_0 d_foddato gender height weight bmi cci patient_information_complete dateop opage biopsymet ps asa hospital surgeon optime optype loca_adrmet removal surg_remove compli_during compli_during_type___1 compli_during_type___2 compli_during_type___3 compli_during_type___4 compli_during_expla operation_complete discharge hospitalization_days compli_after complications___1 complications___2 complications___3 complications___4 complications___5 complications___6 complications___7 complications___99 compli_expla transfer transfer_depart trans_cause hospitalization_complete cancertype_2 subtype_cancer immunocancer_2 primary_date synvsmeta adrenal_enlarge discovery_adrmet discovery_adrmet_2 adrenalsize imaging___1 imaging___2 imaging___3 imaging___4 technique patosizeyesno patosize specisize ki67yesno ki67 pet pet_date treat_primary how_treat_primary radi_primary other_metastasis other_met_loc tnm radi_pato radi1or2 treat_chemo treat_radio treat_immuno chemo_prior radio_prior immuno_prior treat_chemo_after treat_radio_after treat_immuno_after chemo_after radio_after immuno_after cancer_information_complete crp neutro lympho nlr trombo ldh na albumin haemo bf alat comment_blood biochemical_informat_v_1 follow_up alive d_dod days_alive days_alive1 days_alive_biopsy cause_death compli_postop compli_postop_type___1 compli_postop_type___2 compli_postop_type___3 compli_postop_type___4 compli_postop_type___5 compli_postop_type___6 compli_postop_expla diseasefree relapse relapse_date location_relapse discuss question bloodwork notespt curative follow_up_complete 
 set more off
 describe

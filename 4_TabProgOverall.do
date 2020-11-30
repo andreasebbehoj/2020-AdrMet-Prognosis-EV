@@ -8,7 +8,7 @@ use data/Cohort_Dataset.dta, clear
 stset surv, failure(alive==0)
 
 ** Exposure vars
-global expvar = "ib1.sex c.age ib1.agecat c.cci c.bmi ib1.cancertype ib1.sizecat c.patosize ib2.synvsmeta ib0.other_metastasis ib1.surgcat_simple ib1.radical"
+global expvar = "ib1.sex c.age ib1.agecat c.cci c.bmi ib1.cancertype ib1.sizecat c.patosize ib2.synvsmeta ib0.other_metastasis ib1.surgcat_simple ib0.radical"
 
 * Transforming continues exp vars
 local age_per = 10
