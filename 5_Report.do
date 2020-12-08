@@ -196,6 +196,32 @@ putdocx text ("Notes:"), bold
 putdocx text  (`" Median and 1-year survival after adrenal metastasectomy for renal, lung, and colorectal cancer."')
 
 
+*** Supplementary
+putdocx sectionbreak, landscape
+putdocx paragraph, style(Heading1) `fontHeading1'
+putdocx text ("Supplementary")
+local supno = 0
+
+
+** Tab - Cancer substypes
+local supno = `supno'+1
+putdocx paragraph, style(Heading2) `fontHeading2'
+putdocx text ("Supplementary `supno' - Cancers and Histological Subtypes ")
+
+* Add and format data
+use results/TabCancerTypes.dta, clear
+ds sort, not
+putdocx table tbl1 = data("`r(varlist)'"), width(100%) layout(autofitcontents)
+putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1(., .), ${tablefirstcol}
+putdocx table tbl1(1/2, .), ${tablefirstrow}
+putdocx table tbl1(1, .), border(all, nil)
+putdocx paragraph
+putdocx text ("Notes:"), bold
+putdocx text  (`" Cancers and histological subtypes."')
+
+
+
 
 *** Save Figures and Tables report
 putdocx save results/FigTablesCombined, replace
