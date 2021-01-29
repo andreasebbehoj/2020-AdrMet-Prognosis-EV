@@ -60,15 +60,12 @@ drop N perc immunocancer_2
 
 reshape wide rowname text , i(sort) j(cancertype)
 
-* Add col headers
-newrow
-recode sort (.=0)
+* Change col headers
 foreach grp of local grps {
 	local n = text`grp'[1]
 	* Group header
-	qui: replace rowname`grp' = "`label`grp''_p(n=`n')" if sort==0
-	* Sub headers
-	qui: replace rowname`grp' = "Subtypes" if sort==1
+	qui: replace rowname`grp' = "`label`grp''_p(n=`n')" if sort==1
+	* n(%)
 	qui: replace text`grp' = "n (%)" if sort==1
 	
 }

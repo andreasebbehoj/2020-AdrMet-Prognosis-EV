@@ -214,8 +214,7 @@ ds sort, not
 putdocx table tbl1 = data("`r(varlist)'"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., .), ${tablefirstcol}
-putdocx table tbl1(1/2, .), ${tablefirstrow}
-putdocx table tbl1(1, .), border(all, nil)
+putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
 putdocx text ("Notes:"), bold
 putdocx text  (`" Cancers and histological subtypes."')
