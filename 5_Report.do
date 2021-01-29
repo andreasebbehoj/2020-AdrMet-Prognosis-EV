@@ -217,7 +217,7 @@ putdocx table tbl1(., .), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
 putdocx text ("Notes:"), bold
-putdocx text  (`" Cancers and histological subtypes."')
+putdocx text  (`" Cancers and their histological subtypes based on pathological examination of primary malignancy and adrenal metastasis."')
 
 
 
