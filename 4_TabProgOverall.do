@@ -5,7 +5,7 @@
 use data/Cohort_Dataset.dta, clear
 
 ** Outcome var
-stset surv, failure(alive==0)
+stset surv, failure(alive==0) scale(30.4)
 
 ** Exposure vars
 global expvar = "ib1.sex c.age ib1.agecat c.cci c.bmi ib1.cancertype ib1.sizecat c.patosize ib2.synvsmeta ib0.other_metastasis ib1.surgcat_simple ib0.radical"
@@ -45,7 +45,7 @@ frame table {
 	gen hr_crude_p = "P"
 	gen hr_adjust = "Adjusted HRR_p(95%CI) *"
 	gen hr_adjust_p = "P"
-	gen median = "Median survival_pyears (IQR)"
+	gen median = "Median survival_pmonths (IQR)"
 	gen surv1 = "1-year survival_p% (95%CI)"
 }
 
@@ -271,12 +271,12 @@ foreach varanalysis of global expvar {
 		
 		
 		tempfile surv1
-		qui: sts list, at(0 1) by(`varname') saving(`surv1', replace)
+		qui: sts list, at(0 12) by(`varname') saving(`surv1', replace)
 		qui: use `surv1', clear
 		gen no = _n
 		
 		foreach subgrp of local subgrps {
-			qui: su no if `varname'==`subgrp' & time==1
+			qui: su no if `varname'==`subgrp' & time==12
 			local est = string(round(survivor[`r(max)']*100 ${signo_surv1})
 			local lb = string(round(lb[`r(max)']*100 ${signo_surv1})
 			local ub = string(round(ub[`r(max)']*100 ${signo_surv1})

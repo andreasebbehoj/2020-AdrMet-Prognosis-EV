@@ -3,7 +3,7 @@ use data/Cohort_Dataset.dta, clear
 
 
 *** Set data
-stset surv, failure(alive==0)
+stset surv, failure(alive==0) scale(365.25)
 
 *** Graphs
 local ylab = `"0 "0%" 0.25 "25%" 0.50 "50%" 0.75 "75%" 1.00 "100%""'
