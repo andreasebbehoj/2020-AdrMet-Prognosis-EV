@@ -127,7 +127,7 @@ putdocx text ("§ Other major perioperative complications included${Footnote_com
 putdocx text ("¤ $Footnote_comp_death"), linebreak
 putdocx text ("~ Other major postoperative complications included${Footnote_comp_postmajorother}."), linebreak
 putdocx text ("Notes:"), bold
-putdocx text  (`" Complications were classified in major and minor complications, based on severity, and as perioperative complications (during surgery) and post-operative complications (up to 30 days after surgery). Minor postoperative complications were only recorded if there was a need for intervention (e.g. obstipation requiring laxatives). Patients could be counted in more than category."')
+putdocx text  (`" Complications were classified in major and minor complications, based on severity, and as perioperative complications (during surgery) and post-operative complications (up to 30 days after surgery). Minor postoperative complications were only recorded if there was a need for intervention (e.g. obstipation requiring laxatives). Patients could be counted in more than one category."')
 
 
 ** Tab - Prognostic overall
