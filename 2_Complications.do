@@ -167,7 +167,7 @@ label var post_anymajor "Any major (excl. death)"
 gen compli_death = 1 // Vital status was available for all patients
 label var compli_death "30-day mortality available"
 
-gen death = 1 if surv<(30/365.25) & alive==0 
+gen death = 1 if surv<30 & alive==0 
 recode death (.=0) // complete follow-up
 label var death "Death within 30 days"
 
