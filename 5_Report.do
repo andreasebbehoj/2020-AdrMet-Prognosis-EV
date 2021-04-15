@@ -134,19 +134,17 @@ putdocx text  (`" Complications were classified in major and minor complications
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Overall Prognostic Factors")
+putdocx text ("Table `tabno' - Prognosis by Primary Cancer")
 
 * Add and format data
 use results/TabProgOverall.dta, clear
-putdocx table tbl1 = data("rowname n hr_crude hr_adjust median surv1"), width(100%) layout(autofitcontents)
+putdocx table tbl1 = data("rowname n hr_crude hr_adjust median surv1") if inlist(varname, "Varname", "cancertype"), width(100%) layout(autofitcontents)
 putdocx table tbl1(., .), ${tablecells} 
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
 putdocx text ("Abbreviations and symbols:"), bold
-putdocx text  (" BMI, body mass index; CCI, Charlson Comorbidity Index; HRR, hazard rate ratio. *Adjusted for age, sex, and CCI. ")
-putdocx text ("Notes:"), bold
-putdocx text  (`" Cox proportional regression analysis for overall survival after adrenal metastasectomy."')
+putdocx text  (" HRR, hazard rate ratio. *Adjusted for age, sex, and Charlson Comorbidity Index. ")
 
 
 ** Tab - Crude HRR for each cancer
