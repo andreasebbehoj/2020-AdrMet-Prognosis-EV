@@ -35,8 +35,6 @@ do 2_ImportRedcap.do
 
 do 2_CohortAndVars.do
 
-do 2_Complications.do
-
 
 ***** 3) PREPARE OTHER DATA
 /*
