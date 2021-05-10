@@ -23,6 +23,7 @@ do 1_Setup.do
 
 do 1_FigTabLayout.do
 
+do 1_addtab.do
 
 ***** 2) PREPARE PATIENT DATA
 /*
