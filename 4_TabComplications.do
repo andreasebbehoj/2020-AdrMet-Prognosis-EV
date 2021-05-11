@@ -11,11 +11,11 @@ label var cd_other3___1 "Other (choice=)"
 label var cd_other4___1 "Other (choice=)"
 
 ** Combine complications
-* Other CD 1-2
-egen anycomp = rowmax(cd_other2*)
+* Other CD 1 + other CD 2 + rare complications
+egen anycomp = rowmax(cd_other2___* cd_oedema___* cd_nerve___*)
 replace cd_other1___1 =1 if anycomp==1
 label var cd_other1___1 "Other (choice=)"
-drop cd_other2* anycomp
+drop cd_other2___* cd_oedema___* cd_nerve___* anycomp
 
 
 *** Group complications in Clavien-Dindo 
@@ -32,11 +32,11 @@ label define cdcat_ ///
 label value cdcat cdcat_
 
 * Define comp classes
-global cd1 = "cd_bleeding cd_organcapsular cd_tumorleak cd_woundinfec cd_gi cd_uti cd_pneumonia cd_atelec cd_oedema cd_nerve cd_other1" // CD 1-2
+global cd1 = "cd_bleeding cd_organcapsular cd_tumorleak cd_woundinfec cd_gi cd_uti cd_pneumonia cd_atelec  cd_other1" // CD 1-2
 
 global cd3 = "cd_conversion cd_organresec cd_abssevere cd_pleuraex cd_organadhere cd_reopbleeding cd_organlesion cd_ulcer cd_other3" // CD 3
 
-global cd4 = "cd_chola cd_renalinsuf cd_delir cd_abdocat cd_cardiac cd_circcol cd_renalinfarc cd_pancreas cd_ai cd_sepsis cd_multiorgan cd_other4" // CD 4
+global cd4 = "cd_chola cd_renalinsuf cd_delir cd_abdocat cd_cardiac cd_circcol cd_sepsis cd_renalinfarc cd_pancreas cd_ai cd_multiorgan cd_other4" // CD 4
 
 global cd5 = "cd_death" // CD 5
 
