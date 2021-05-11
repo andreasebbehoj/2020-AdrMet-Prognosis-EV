@@ -81,7 +81,7 @@ putdocx text ("Table `tabno' - Patient and Tumour Characteristics and Surgical M
 use results/TabCharByCancer.dta, clear
 ds cell_*
 putdocx table tbl1 = data("rowname `r(varlist)'"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1(., .), ${tablecells}
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 levelsof row if !mi(firstcol) & mi(seccol)
@@ -97,37 +97,29 @@ putdocx text  (`" For variables, where data could not be found for all 439 patie
 local tabno = `tabno'+1
 putdocx pagebreak
 putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Minor and Major Surgical Complications by Surgical Approach")
+putdocx text ("Table `tabno' - Surgical Complications by Surgical Approach")
 use results/TabComplications.dta, clear
+gen row=_n
 
 * Add footnote symbols
-replace cell_1 = subinstr(cell_1, "scopic", "scopic *", 1) if row==1 // Lap includes converted to open OP
-replace rowname = rowname + " #" if var=="peri_major_lesion" // Details organ lesions
-replace rowname = rowname + " §" if var=="peri_major_other" // Details other major periOP complications
-replace rowname = rowname + " ¤" if inlist(var, "post_anymajor", "compli_death") // Footnote on death and/or major complications
-replace rowname = rowname + " ~" if var=="post_major_other" // Details other major postOP complications
+replace col_1 = subinstr(col_1, "scopic", "scopic *", 1) if row==1 // Lap includes converted to open OP
 
 * Format table
-levelsof row if mi(rowheader), sep(",")
-replace rowname = "   " + rowname if inlist(row, `r(levels)')
+replace rowname = "   " + rowname if varname!="cdcat" & !mi(varname)
 
-putdocx table tbl1 = data("rowname cell_1 cell_2"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1 = data("rowname col_total col_1 col_2"), width(100%) layout(autofitcontents)
+putdocx table tbl1(., .), ${tablecells}
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
-levelsof row if rowheader==1
+levelsof row if varname=="cdcat"
 putdocx table tbl1(`r(levels)', .), ${tablerows}
 
 putdocx paragraph
 putdocx text ("Abbreviations and symbols:"), bold
-putdocx text  (" UTI, urinary tract infection"), linebreak
-putdocx text ("* Including patients converted from laparoscopic to open surgery."), linebreak
-putdocx text ("# Organ lesions included lesion of${Footnote_comp_perimajorlesion}."), linebreak
-putdocx text ("§ Other major perioperative complications included${Footnote_comp_perimajorother}."), linebreak
-putdocx text ("¤ $Footnote_comp_death"), linebreak
-putdocx text ("~ Other major postoperative complications included${Footnote_comp_postmajorother}."), linebreak
+putdocx text  (" AFIB, atrial fibrillation; GI, gastro-intestinal; ICU, intensive care unit. "), linebreak
+putdocx text ("* Including patients peri-operatively converted from laparoscopic to open surgery."), linebreak
 putdocx text ("Notes:"), bold
-putdocx text  (`" Complications were classified in major and minor complications, based on severity, and as perioperative complications (during surgery) and post-operative complications (up to 30 days after surgery). Minor postoperative complications were only recorded if there was a need for intervention (e.g. obstipation requiring laxatives). Patients could be counted in more than one category."')
+putdocx text  (`" Patients are only counted once in the Clavien-Dindo classification according to their most severe complication. Within a Clavien-Dindo category, a patient could be counted more than once if he or she had multiple complications of the same severity. Adrenal insufficiency after bilateral adrenalectomy was not considered a complication, but adrenal insufficiency after unilateral adrenalectomy was."')
 
 
 ** Tab - Prognostic overall
@@ -139,7 +131,7 @@ putdocx text ("Table `tabno' - Prognosis by Primary Cancer")
 * Add and format data
 use results/TabProgOverall.dta, clear
 putdocx table tbl1 = data("rowname n hr_crude hr_adjust median surv1") if inlist(varname, "Varname", "cancertype"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1(., .), ${tablecells}
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
@@ -163,7 +155,7 @@ foreach var of local varlist {
 drop if _n==2
 
 putdocx table tbl1 = data("rowname `varlist'"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1(., .), ${tablecells}
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
@@ -185,7 +177,7 @@ use results/TabProgByCancer_Combined.dta, clear
 drop if vartype=="c" // No data for continuous vars
 
 putdocx table tbl1 = data("rowname median1 surv11 median2 surv12 median3 surv13"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1(., .), ${tablecells}
 putdocx table tbl1(., 1), ${tablefirstcol}
 putdocx table tbl1(1/2, .), ${tablefirstrow}
 putdocx table tbl1(1, .), border(all, nil)
@@ -210,7 +202,7 @@ putdocx text ("Supplementary `supno' - Cancers and Histological Subtypes ")
 use results/TabCancerTypes.dta, clear
 ds sort, not
 putdocx table tbl1 = data("`r(varlist)'"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells} 
+putdocx table tbl1(., .), ${tablecells}
 putdocx table tbl1(., .), ${tablefirstcol}
 putdocx table tbl1(1, .), ${tablefirstrow}
 putdocx paragraph
