@@ -95,7 +95,7 @@ foreach cdcat in 1 3 4 5 {
 	* Add details
 	foreach var of global cd`cdcat' {
 		local label : var label `var'
-		qui: addtab_no if `var'==1, var(`var') rowname("`label', n")
+		qui: addtab_no if `var'==1 & cdcat==`cdcat', var(`var') rowname("`label', n")
 	}
 }
 
