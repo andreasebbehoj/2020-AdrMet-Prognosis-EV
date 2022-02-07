@@ -5,6 +5,8 @@ file close _all
 
 set more off
 
+global F4 = "codebook "
+
 *** Generate necessary folders
 capture: mkdir data
 capture: mkdir results
