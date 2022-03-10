@@ -165,27 +165,6 @@ putdocx text ("Notes:"), bold
 putdocx text  (`" Cox proportional regression analysis for overall survival after adrenal metastasectomy for each primary cancer."')
 
 
-** Tab - Median and 1-year survival for each cancer
-local tabno = `tabno'+1
-putdocx pagebreak
-putdocx paragraph, style(Heading2) `fontHeading2'
-putdocx text ("Table `tabno' - Median and 1-year survival by Primary Cancer")
-
-* Add and format data
-use results/TabProgByCancer_Combined.dta, clear
-
-drop if vartype=="c" // No data for continuous vars
-
-putdocx table tbl1 = data("rowname median1 surv11 median2 surv12 median3 surv13"), width(100%) layout(autofitcontents)
-putdocx table tbl1(., .), ${tablecells}
-putdocx table tbl1(., 1), ${tablefirstcol}
-putdocx table tbl1(1/2, .), ${tablefirstrow}
-putdocx table tbl1(1, .), border(all, nil)
-putdocx paragraph
-putdocx text ("Notes:"), bold
-putdocx text  (`" Median and 1-year survival after adrenal metastasectomy for renal, lung, and colorectal cancer."')
-
-
 *** Supplementary
 putdocx sectionbreak, landscape
 putdocx paragraph, style(Heading1) `fontHeading1'
@@ -209,6 +188,26 @@ putdocx paragraph
 putdocx text ("Notes:"), bold
 putdocx text  (`" Cancers and their histological subtypes based on pathological examination of primary malignancy and adrenal metastasis."')
 
+
+** Tab - Median and 1-year survival for each cancer
+local supno = `supno'+1
+putdocx pagebreak
+putdocx paragraph, style(Heading2) `fontHeading2'
+putdocx text ("Supplementary `supno' - Median and 1-year survival by Primary Cancer")
+
+* Add and format data
+use results/TabProgByCancer_Combined.dta, clear
+
+drop if vartype=="c" // No data for continuous vars
+
+putdocx table tbl1 = data("rowname median1 surv11 median2 surv12 median3 surv13 median4 surv14"), width(100%) layout(autofitcontents)
+putdocx table tbl1(., .), ${tablecells}
+putdocx table tbl1(., 1), ${tablefirstcol}
+putdocx table tbl1(1/2, .), ${tablefirstrow}
+putdocx table tbl1(1, .), border(all, nil)
+putdocx paragraph
+putdocx text ("Notes:"), bold
+putdocx text  (`" Median and 1-year survival after adrenal metastasectomy for renal, lung, and colorectal cancer. IQR with an upper end of "." mean that the 75th percentile survival was not reached before end of follow-up."')
 
 
 ** Fig Surv by tumor characteristics
