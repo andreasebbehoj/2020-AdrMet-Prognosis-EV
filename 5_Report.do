@@ -211,6 +211,32 @@ putdocx text  (`" Cancers and their histological subtypes based on pathological 
 
 
 
+** Fig Surv by tumor characteristics
+putdocx sectionbreak
+local supno = `supno'+1
+putdocx paragraph, style(Heading2) `fontHeading2'
+putdocx text ("Supplementary `supno' - Survival by A) synchronous or metachronous adrenal metastasis, B) presence of extra-adrenal metastases at time of metasectomy, and C) radicality")
+
+putdocx paragraph
+putdocx text ("A")
+putdocx paragraph, halign(center)
+putdocx image results/FigSurvbySynMeta${exportformat}, height(2.8 in)
+
+putdocx paragraph
+putdocx text ("B")
+putdocx paragraph, halign(center)
+putdocx image results/FigSurvbyExtraMets${exportformat}, height(2.8 in)
+
+putdocx paragraph
+putdocx text ("C")
+putdocx paragraph, halign(center)
+putdocx image results/FigSurvbyRadicality${exportformat}, height(2.8 in)
+
+putdocx paragraph
+putdocx text ("Notes:"), bold
+putdocx text  (" Kaplan-Meier curve showing survival after adrenal metastasectomy The faded area represents the 95% confidence interval. Patients at risk are shown below the graph. ")
+
+
 
 *** Save Figures and Tables report
 putdocx save results/FigTablesCombined, replace
@@ -225,3 +251,4 @@ foreach file of local files {
 }
 di "`textappend'"
 putdocx append `textappend', saving(results/ReportCombined, replace)
+
